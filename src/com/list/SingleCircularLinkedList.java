@@ -2,7 +2,8 @@ package com.list;
 
 import com.node.SingleNode;
 
-public class SingleLinkedList {
+public class SingleCircularLinkedList {
+
 	private SingleNode head;
 	private SingleNode tail;
 	private int size; //denotes size of  list
@@ -57,20 +58,21 @@ public class SingleLinkedList {
 		else if(location ==0){
 			sn.setNext(head);
 			head = sn;	
+			tail.setNext(head);
 		}
 		else if(location >= this.getSize()){
 			// adding element to last node
-			sn.setNext(null);
+			
 			tail.setNext(sn);
 			tail = sn;
+			sn.setNext(head);
 		}else{
 			SingleNode temp_node = this.getHead();
 			for(int i=0 ; i<location-1; i++){
 				temp_node = temp_node.getNext();
 			}
-			SingleNode nextNode = temp_node.getNext(); //get next node from temp node
 			temp_node.setNext(sn); // set sn as next node of temp node
-			sn.setNext(nextNode); // set sn's next to nextNode
+			sn.setNext(temp_node.getNext()); // set sn's next to nextNode
 		}
 		
 		this.setSize(this.getSize()+1);
@@ -92,10 +94,30 @@ public class SingleLinkedList {
 		System.out.println("\n");
 	}
 	
+	
+	public void printHeadUsingTail(){
+		if(existsLinkedList()){
+			System.out.println("printing tail value");
+			System.out.println(getTail().getValue());
+			System.out.println("printing head value");
+			System.out.println(getHead().getValue());
+			System.out.println("printing  head value using tAIL");
+			System.out.println(getTail().getNext().getValue());
+		}else{
+			System.out.println("linked list does not exists");
+		}
+	}
 	public void deleteLinkedList() {
-		this.head = null;
-		this.tail = null;
-		System.out.println("linked list is deleted");
+		System.out.println("\n\nDeleting Linked List...");
+		head = null;
+		if(tail == null) {
+			System.out.println("Linked List is already deleted, nothing to delete !");
+			return;
+		}else {
+			tail.setNext(null);
+			tail = null;
+			System.out.println("Linked List deleted successfully !");
+		}
 	}
 	
 	public Boolean searchNode(int nodeValue){
@@ -121,7 +143,8 @@ public class SingleLinkedList {
 		}
 		else if(location == 0){
 			this.setHead(this.getHead().getNext());
-			this.setSize(this.getSize()-1);
+			this.setSize(this.getSize()-1);;
+			getTail().setNext(getHead());
 			if(this.getSize()==0){
 				this.setTail(null);
 			}
@@ -133,10 +156,11 @@ public class SingleLinkedList {
 			if (tempNode == this.getHead()){
 				head = null;
 				tail = null;
+				
 				this.setSize(this.getSize()-1);
 				return;
 			}
-			tempNode.setNext(null);
+			tempNode.setNext(getHead());
 			tail= tempNode;
 			this.setSize(this.getSize()-1);
 		}else{
