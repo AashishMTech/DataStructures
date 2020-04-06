@@ -22,5 +22,5 @@ public class QueueByListMain {
 		System.out.println("peek : "+ queue.peek());
 		
 		queue.deleteQueue();
-	}
+	} 
 }
