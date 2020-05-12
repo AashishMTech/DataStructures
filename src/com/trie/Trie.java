@@ -17,7 +17,7 @@ public class Trie {
 			char word_char = word.charAt(i);
 			TrieNode child = current.getChildren().get(word_char);
 			if(child == null) {
-				child = new TrieNode();
+				child =  new TrieNode();
 				current.getChildren().put(word_char, child);
 			}
 			current = child;			
